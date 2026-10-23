@@ -1,0 +1,29 @@
+{
+  "security-and-workflow-gates": {
+    "enabled": true,
+    "PreToolUse": [
+      {
+        "matcher": "run_command|write_to_file|replace_file_content|multi_replace_file_content|view_file",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 .agents/hooks/hook-dispatcher.py",
+            "timeout": 15
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "write_to_file|replace_file_content|multi_replace_file_content",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 .agents/hooks/post-tool-dispatcher.py",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}
